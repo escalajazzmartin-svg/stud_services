@@ -1,0 +1,619 @@
+/* ========================================
+   WSS STUDENT REGISTRATION
+   Westmead International School
+======================================== */
+
+/* 1. BASE LAYOUT */
+
+.registration-page,
+.registration-page *,
+.registration-page *::before,
+.registration-page *::after {
+    box-sizing: border-box;
+}
+
+.registration-page {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 28px 32px;
+    color: #292929;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+/* 2. PAGE HEADING */
+
+.registration-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 0 0 24px;
+}
+
+.registration-heading>div {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+.registration-heading h1 {
+    margin: 0 0 8px;
+    color: #641414;
+    font-size: clamp(23px, 2.2vw, 30px);
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.registration-heading p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* 3. REGISTRATION CARD */
+
+.registration-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* 4. TOOLBAR AND SEARCH */
+
+.registration-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.registration-count {
+    flex: 0 0 auto;
+    color: #555b65;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.registration-search-form {
+    width: 100%;
+    max-width: 380px;
+    margin-left: auto;
+}
+
+.registration-search {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 12px 15px;
+    color: #292929;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.registration-search:focus {
+    border-color: #641414;
+    box-shadow: 0 0 0 3px rgba(100, 20, 20, 0.1);
+}
+
+.registration-search::placeholder {
+    color: #9ca3af;
+}
+
+.registration-search::-webkit-search-cancel-button {
+    cursor: pointer;
+}
+
+/* 5. BUTTONS */
+
+.registration-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex: 0 0 auto;
+    min-height: 42px;
+    max-width: 100%;
+    padding: 11px 17px;
+    color: #641414;
+    background: #f2c300;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.registration-button:hover {
+    background: #dfb400;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.registration-button:active {
+    transform: translateY(1px);
+}
+
+.registration-button:focus-visible {
+    outline: 2px solid #641414;
+    outline-offset: 3px;
+}
+
+.registration-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* 6. TABLE CONTAINER */
+
+.registration-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 7. REGISTRATION TABLE */
+
+.registration-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 13px;
+    text-align: left;
+}
+
+.registration-table th {
+    padding: 15px 16px;
+    color: #641414;
+    background: #f8f3f3;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.registration-table td {
+    padding: 15px 16px;
+    color: #414651;
+    background: #fff;
+    border-bottom: 1px solid #edf0f2;
+    line-height: 1.6;
+    vertical-align: middle;
+}
+
+.registration-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.registration-table tbody tr:hover td {
+    background: #fcf8f0;
+}
+
+.registration-table td:first-child {
+    color: #641414;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.registration-table td:nth-child(4),
+.registration-table td:nth-child(6) {
+    white-space: nowrap;
+}
+
+.registration-table .registration-empty {
+    padding: 32px 16px;
+    color: #737985;
+    text-align: center;
+    white-space: normal;
+}
+
+.registration-table tbody tr[hidden] {
+    display: none !important;
+}
+
+/* 8. ACTION BUTTONS */
+
+.registration-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 150px;
+}
+
+.registration-actions .registration-button {
+    min-height: 36px;
+    padding: 8px 11px;
+    font-size: 12px;
+}
+
+.registration-delete-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+.registration-delete-button {
+    color: #fff;
+    background: #a51d2d;
+}
+
+.registration-delete-button:hover {
+    background: #821624;
+}
+
+/* 9. ERROR MESSAGE */
+
+.registration-message {
+    margin: 0 0 18px;
+    padding: 13px 16px;
+    color: #842029;
+    background: #f8d7da;
+    border: 1px solid #f1aeb5;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ========================================
+   10. ADD / EDIT STUDENT MODAL
+======================================== */
+
+.registration-modal[aria-hidden="true"] {
+    display: none;
+}
+
+.registration-modal.is-open {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.registration-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(25, 15, 15, 0.6);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.registration-modal-content {
+    position: relative;
+    z-index: 1;
+    width: min(720px, 100%);
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    padding: 26px;
+    background: #fff;
+    color: #292929;
+    border: 1px solid #e7e7e7;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+    animation: registrationModalIn 0.18s ease-out;
+}
+
+.registration-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.registration-modal-header h2 {
+    margin: 0;
+    color: #641414;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.registration-modal-header p {
+    margin: 7px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.registration-modal-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    color: #641414;
+    background: #f8f3f3;
+    border: 1px solid #eee1e1;
+    border-radius: 8px;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.registration-modal-close:hover {
+    background: #eee1e1;
+}
+
+.registration-modal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.registration-field {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.registration-field label {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.registration-field input,
+.registration-field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+    padding: 10px 12px;
+    color: #292929;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.registration-field input:focus,
+.registration-field select:focus {
+    border-color: #641414;
+    box-shadow: 0 0 0 3px rgba(100, 20, 20, 0.1);
+}
+
+.registration-field input::placeholder {
+    color: #9ca3af;
+}
+
+.registration-modal-message {
+    margin: 16px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.registration-modal-message:empty {
+    display: none;
+}
+
+.registration-modal-message.is-success {
+    color: #15803d;
+}
+
+.registration-modal-message.is-error {
+    color: #b91c1c;
+}
+
+.registration-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.registration-button-secondary {
+    color: #641414;
+    background: #fff;
+    border-color: #d1d5db;
+}
+
+.registration-button-secondary:hover {
+    background: #f8f3f3;
+    box-shadow: none;
+}
+
+body.registration-modal-open {
+    overflow: hidden;
+}
+
+/* 11. MODAL ANIMATION */
+
+@keyframes registrationModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 12. TABLET */
+
+@media (max-width: 768px) {
+    .registration-page {
+        padding: 24px 20px;
+    }
+
+    .registration-heading {
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .registration-card {
+        padding: 18px;
+    }
+
+    .registration-toolbar {
+        gap: 12px;
+    }
+
+    .registration-search-form {
+        max-width: 100%;
+    }
+}
+
+/* 13. MOBILE */
+
+@media (max-width: 600px) {
+    .registration-page {
+        padding: 18px 12px;
+    }
+
+    .registration-heading {
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .registration-heading>div {
+        flex-basis: 100%;
+    }
+
+    .registration-heading h1 {
+        font-size: 22px;
+    }
+
+    .registration-heading p {
+        font-size: 13px;
+    }
+
+    .registration-heading>.registration-button {
+        width: 100%;
+    }
+
+    .registration-card {
+        padding: 12px;
+        border-radius: 9px;
+    }
+
+    .registration-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+        margin-bottom: 14px;
+    }
+
+    .registration-count {
+        font-size: 12px;
+    }
+
+    .registration-search-form {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .registration-table {
+        min-width: 700px;
+    }
+
+    .registration-table th,
+    .registration-table td {
+        padding: 12px;
+    }
+
+    .registration-actions {
+        min-width: 130px;
+    }
+
+    .registration-modal.is-open {
+        align-items: center;
+        padding: 10px;
+    }
+
+    .registration-modal-content {
+        max-height: calc(100vh - 20px);
+        max-height: calc(100dvh - 20px);
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .registration-modal-header {
+        margin-bottom: 18px;
+        padding-bottom: 15px;
+    }
+
+    .registration-modal-header h2 {
+        font-size: 19px;
+    }
+
+    .registration-modal-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .registration-modal-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .registration-modal-footer .registration-button {
+        width: 100%;
+    }
+}
+
+/* 14. REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .registration-button,
+    .registration-search,
+    .registration-field input,
+    .registration-field select {
+        transition: none;
+    }
+
+    .registration-modal-content {
+        animation: none;
+    }
+}

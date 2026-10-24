@@ -1,0 +1,564 @@
+/* ========================================
+   WSS SIDEBAR AND PAGE LAYOUT
+   Westmead International School
+======================================== */
+
+/* ----------------------------------------
+   1. GLOBAL RESET
+---------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-width: 320px;
+    min-height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* ----------------------------------------
+   2. MAIN PAGE LAYOUT
+---------------------------------------- */
+
+.layout {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main content occupies remaining space */
+.main-content {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+
+    width: calc(100% - 260px);
+    min-width: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin-left: 260px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ----------------------------------------
+   3. FIXED SIDEBAR
+---------------------------------------- */
+
+.student-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 260px;
+    height: 100vh;
+    height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: #641414;
+    color: #ffffff;
+
+    box-shadow: 3px 0 12px rgba(0, 0, 0, 0.12);
+}
+
+/* ----------------------------------------
+   4. SIDEBAR BRAND
+---------------------------------------- */
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    flex-shrink: 0;
+    min-height: 88px;
+    padding: 18px 20px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.sidebar-brand img {
+    display: block;
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    object-fit: contain;
+}
+
+.sidebar-brand>div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.sidebar-brand h2 {
+    margin: 0;
+
+    color: #ffffff;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 1px;
+}
+
+.sidebar-brand span {
+    display: block;
+    margin-top: 4px;
+
+    color: #f2c300;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+
+    overflow-wrap: anywhere;
+}
+
+/* ----------------------------------------
+   5. SIDEBAR NAVIGATION
+---------------------------------------- */
+
+.student-navigation {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    gap: 5px;
+
+    min-width: 0;
+    padding: 22px 12px;
+}
+
+.student-navigation a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    color: rgba(255, 255, 255, 0.88);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.student-navigation a i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 20px;
+    width: 20px;
+
+    color: #f2c300;
+    font-size: 16px;
+    text-align: center;
+}
+
+.student-navigation a span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.student-navigation a:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+}
+
+.student-navigation a:hover i {
+    color: #ffffff;
+}
+
+/* Active navigation */
+.student-navigation a.active {
+    background: #f2c300;
+    color: #641414;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.student-navigation a.active i {
+    color: #641414;
+}
+
+/* Keyboard accessibility */
+.student-navigation a:focus-visible,
+.logout-link:focus-visible {
+    outline: 2px solid #f2c300;
+    outline-offset: 3px;
+}
+
+/* ----------------------------------------
+   6. SIDEBAR USER INFORMATION
+---------------------------------------- */
+
+.sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    min-width: 0;
+    padding: 0 14px 12px;
+
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.sidebar-user-info strong {
+    color: #ffffff;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.sidebar-user-info small {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 11px;
+}
+
+/* ----------------------------------------
+   7. SIDEBAR LOGOUT
+---------------------------------------- */
+
+.sidebar-bottom {
+    flex-shrink: 0;
+    padding: 14px 12px 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-height: 46px;
+    padding: 12px 14px;
+
+    border-radius: 7px;
+
+    color: #ffffff;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.logout-link i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 20px;
+    width: 20px;
+
+    color: #f2c300;
+    font-size: 16px;
+}
+
+.logout-link:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #f2c300;
+}
+
+/* ----------------------------------------
+   8. SHARED TOPBAR
+---------------------------------------- */
+
+.main-content>.dashboard-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 76px;
+
+    margin: 0;
+    padding: 14px 30px;
+
+    background: var(--wis-white, #ffffff);
+    border-top: 1px solid #d9d9d9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-topbar>div:first-child {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+
+    min-width: 0;
+}
+
+.dashboard-topbar h1 {
+    margin: 0;
+
+    color: var(--wis-maroon, #8b1e1e);
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+.dashboard-topbar .student-account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    flex: 0 1 auto;
+    min-width: 0;
+    margin: 0;
+}
+
+.dashboard-topbar .student-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    background: var(--wis-maroon, #8b1e1e);
+    color: var(--wis-white, #ffffff);
+
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.dashboard-topbar .student-account-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.dashboard-topbar .student-account-info strong {
+    color: var(--wis-black, #171717);
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
+}
+
+.dashboard-topbar .student-account-info span {
+    color: #777777;
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ----------------------------------------
+   9. TABLET RESPONSIVENESS
+---------------------------------------- */
+
+@media (max-width: 768px) {
+    .student-sidebar {
+        width: 220px;
+    }
+
+    .sidebar-brand {
+        gap: 10px;
+        min-height: 76px;
+        padding: 14px;
+    }
+
+    .sidebar-brand img {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .sidebar-brand h2 {
+        font-size: 17px;
+    }
+
+    .sidebar-brand span {
+        font-size: 10px;
+    }
+
+    .student-navigation {
+        padding: 16px 10px;
+    }
+
+    .student-navigation a,
+    .logout-link {
+        gap: 10px;
+        padding: 11px;
+        font-size: 12px;
+    }
+
+    .main-content {
+        width: calc(100% - 220px);
+        margin-left: 220px;
+    }
+
+    .main-content>.dashboard-topbar {
+        gap: 12px;
+        min-height: 68px;
+        padding: 12px 18px;
+    }
+
+    .dashboard-topbar h1 {
+        font-size: 16px;
+    }
+
+    .dashboard-topbar .student-avatar {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    .dashboard-topbar .student-account-info strong {
+        font-size: 12px;
+    }
+
+    .dashboard-topbar .student-account-info span {
+        font-size: 10px;
+    }
+}
+
+/* ----------------------------------------
+   10. MOBILE RESPONSIVENESS
+---------------------------------------- */
+
+@media (max-width: 480px) {
+    .student-sidebar {
+        width: 68px;
+    }
+
+    .sidebar-brand {
+        justify-content: center;
+        min-height: 68px;
+        padding: 12px 8px;
+    }
+
+    .sidebar-brand img {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .sidebar-brand>div,
+    .student-navigation a span,
+    .logout-link span,
+    .sidebar-user-info {
+        display: none;
+    }
+
+    .student-navigation {
+        align-items: center;
+        padding: 16px 8px;
+    }
+
+    .student-navigation a {
+        justify-content: center;
+        width: 48px;
+        min-height: 46px;
+        padding: 10px;
+    }
+
+    .student-navigation a i {
+        flex-basis: auto;
+        width: auto;
+        font-size: 17px;
+    }
+
+    .sidebar-bottom {
+        padding: 12px 8px;
+    }
+
+    .logout-link {
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .logout-link i {
+        flex-basis: auto;
+        width: auto;
+    }
+
+    .main-content {
+        width: calc(100% - 68px);
+        margin-left: 68px;
+    }
+
+    .main-content>.dashboard-topbar {
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .dashboard-topbar h1 {
+        font-size: 13px;
+    }
+
+    .dashboard-topbar .student-account {
+        gap: 7px;
+    }
+
+    .dashboard-topbar .student-avatar {
+        flex-basis: 32px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .dashboard-topbar .student-account-info strong {
+        max-width: 100px;
+        font-size: 11px;
+    }
+}

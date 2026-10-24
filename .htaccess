@@ -1,0 +1,36 @@
+
+# ========================================
+# STUD_SERVICES - HTACCESS CONFIGURATION
+# ========================================
+
+Options -Indexes
+DirectoryIndex index.php
+
+# Enable URL rewriting
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct access to internal directories
+    RewriteRule ^(?:includes|config)/ - [F,L,NC]
+
+    # Block access to hidden files and directories
+    RewriteRule "(^|/)\." - [F,L]
+</IfModule>
+
+# Deny access to sensitive configuration and documentation files
+<FilesMatch "^(database\.php|\.env|README\.md)$">
+    Require all denied
+</FilesMatch>
+
+# Deny access to database dumps, backups, logs, and configuration files
+<FilesMatch "\.(sql|bak|backup|old|log|ini|env|dist|sh|conf)$">
+    Require all denied
+</FilesMatch>
+
+# Protect common dependency and version-control files
+<FilesMatch "^(composer\.(json|lock)|package(-lock)?\.json|yarn\.lock|phpunit\.xml|\.gitignore|\.gitattributes)$">
+    Require all denied
+</FilesMatch>
+
+# Set default character encoding
+AddDefaultCharset UTF-8
