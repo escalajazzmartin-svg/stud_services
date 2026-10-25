@@ -24,7 +24,7 @@ if (!$isAdmin && !$isRegistrar && !$isInstructor) {
 }
 
 $canManageStudents = $isAdmin || $isRegistrar;
-$canDeleteStudents = $isAdmin;
+$canDeleteStudents = $isAdmin || $isRegistrar;
 
 $pdo = $pdo ?? $conn ?? null;
 
@@ -36,6 +36,24 @@ if (!$pdo instanceof PDO) {
 $rows = [];
 $courses = [];
 $error = '';
+$statusMessage = '';
+
+$statusKey = $_GET['status'] ?? '';
+
+switch ($statusKey) {
+    case 'deleted':
+        $statusMessage = 'Student record deleted successfully.';
+        break;
+    case 'not-found':
+        $statusMessage = 'Student record was not found.';
+        break;
+    case 'delete-blocked':
+        $statusMessage = 'This student has enrollment history and cannot be deleted.';
+        break;
+    default:
+        $statusMessage = '';
+        break;
+}
 
 function h($value): string
 {
@@ -188,6 +206,12 @@ $columnCount = $canManageStudents ? 7 : 6;
                     <?php if ($error !== ''): ?>
                         <div class="registration-message" role="alert">
                             <?= h($error) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if ($statusMessage !== ''): ?>
+                        <div class="registration-message" role="alert">
+                            <?= h($statusMessage) ?>
                         </div>
                     <?php endif; ?>
 
@@ -377,7 +401,7 @@ $columnCount = $canManageStudents ? 7 : 6;
                                 id="modalYearLevel"
                                 name="year_level"
                                 maxlength="50"
-                                placeholder="e.g. 1st Year"
+                                placeholder="e.g. 1, 2, 3 or 4"
                                 required>
                         </div>
 

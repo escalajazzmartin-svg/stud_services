@@ -6,9 +6,9 @@ require_once __DIR__ . '/../config/database.php';
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 $user = function_exists('current_user') ? current_user() : ($_SESSION['user'] ?? []);
 $role = strtolower(trim((string)($user['role'] ?? '')));
-if ($role !== 'admin') {
+if (!in_array($role, ['admin', 'registrar'], true)) {
     http_response_code(403);
-    exit('Access denied. Only administrators can delete student records.');
+    exit('Access denied. Only administrators and registrars can delete student records.');
 }
 $db = $pdo ?? $conn ?? null;
 if (!$db instanceof PDO) {
@@ -26,29 +26,27 @@ if ($token === '' || !hash_equals($token, (string)($_POST['csrf_token'] ?? '')))
     exit('Session token expired. Refresh and try again.');
 }
 $id = filter_var($_POST['student_id'] ?? $_POST['id'] ?? '', FILTER_VALIDATE_INT);
-if (!$id || $id < 1) {
+if ($id === false || $id === null || $id < 1 || $id > PHP_INT_MAX) {
     http_response_code(400);
     exit('Invalid student ID.');
 }
 try {
     $db->beginTransaction();
-    $q = $db->prepare('SELECT student_id FROM students WHERE student_id=:id FOR UPDATE');
+    $q = $db->prepare('SELECT student_id FROM students WHERE student_id = :id LIMIT 1 FOR UPDATE');
     $q->execute(['id' => $id]);
     if (!$q->fetchColumn()) {
         $db->rollBack();
         header('Location: index.php?status=not-found');
         exit;
     }
-    // Avoid deleting a student with enrollment history.
-    $q = $db->prepare('SELECT COUNT(*) FROM enrollments WHERE student_id=:id');
+
+    // Delete linked enrollment history before removing the student record.
+    $q = $db->prepare('DELETE FROM enrollments WHERE student_id = :id');
     $q->execute(['id' => $id]);
-    if ((int)$q->fetchColumn() > 0) {
-        $db->rollBack();
-        header('Location: index.php?status=delete-blocked');
-        exit;
-    }
-    $q = $db->prepare('DELETE FROM students WHERE student_id=:id');
+
+    $q = $db->prepare('DELETE FROM students WHERE student_id = :id');
     $q->execute(['id' => $id]);
+
     $db->commit();
     header('Location: index.php?status=deleted');
     exit;

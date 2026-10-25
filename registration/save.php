@@ -104,6 +104,16 @@ if (!ctype_digit($number)) {
     ], 422);
 }
 
+// Name validation: letters only with common name punctuation
+foreach (['first' => $first, 'middle' => $middle, 'last' => $last] as $label => $value) {
+    if ($value !== '' && !preg_match('/^[\pL\s\'\.-]+$/u', $value)) {
+        json_response([
+            'success' => false,
+            'message' => 'Name fields may only contain letters, spaces, apostrophes, periods, and hyphens.'
+        ], 422);
+    }
+}
+
 // Phone number: optional, but digits only when supplied
 if ($phone !== '' && !ctype_digit($phone)) {
     json_response([

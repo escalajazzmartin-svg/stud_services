@@ -65,13 +65,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fields['year_level'] === ''
     ) {
         $errors[] = 'Student number, first name, last name, and year level are required.';
-    } elseif (!ctype_digit($fields['student_number'])) {
-        $errors[] = 'Student Number must contain digits only.';
+    } elseif (
+        !ctype_digit($fields['student_number']) ||
+        mb_strlen($fields['student_number']) > 30
+    ) {
+        $errors[] = 'Student Number must contain digits only and be at most 30 characters.';
+    } elseif (
+        (
+            $fields['first_name'] !== '' &&
+            !preg_match('/^[\pL\s\'\.-]+$/u', $fields['first_name'])
+        ) || (
+            $fields['middle_name'] !== '' &&
+            !preg_match('/^[\pL\s\'\.-]+$/u', $fields['middle_name'])
+        ) || (
+            $fields['last_name'] !== '' &&
+            !preg_match('/^[\pL\s\'\.-]+$/u', $fields['last_name'])
+        )
+    ) {
+        $errors[] = 'Name fields may only contain letters, spaces, apostrophes, periods, and hyphens.';
     } elseif (
         $fields['phone'] !== '' &&
-        !ctype_digit($fields['phone'])
+        (!ctype_digit($fields['phone']) || mb_strlen($fields['phone']) > 30)
     ) {
-        $errors[] = 'Phone Number must contain digits only.';
+        $errors[] = 'Phone Number must contain digits only and be at most 30 characters.';
+    } elseif (
+        (mb_strlen($fields['first_name']) > 100) ||
+        (mb_strlen($fields['middle_name']) > 100) ||
+        (mb_strlen($fields['last_name']) > 100) ||
+        (mb_strlen($fields['email']) > 150) ||
+        (mb_strlen($fields['address']) > 255)
+    ) {
+        $errors[] = 'One or more text fields exceed the allowed length.';
     } elseif (
         $fields['email'] !== '' &&
         !filter_var($fields['email'], FILTER_VALIDATE_EMAIL)
@@ -93,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $q = $db->prepare(
-                    'SELECT student_id FROM students WHERE student_number = :v'
+                    'SELECT student_id FROM students WHERE student_number = :v LIMIT 1'
                 );
                 $q->execute(['v' => $fields['student_number']]);
 
@@ -103,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (!$errors && $fields['email'] !== '') {
                     $q = $db->prepare(
-                        'SELECT student_id FROM students WHERE email = :v'
+                        'SELECT student_id FROM students WHERE email = :v LIMIT 1'
                     );
                     $q->execute(['v' => $fields['email']]);
 
@@ -114,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (!$errors && $course !== null) {
                     $q = $db->prepare(
-                        'SELECT course_id FROM courses WHERE course_id = :v'
+                        'SELECT course_id FROM courses WHERE course_id = :v LIMIT 1'
                     );
                     $q->execute(['v' => $course]);
 
